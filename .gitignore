@@ -1,0 +1,14 @@
+.idea
+Unused
+*.pyc
+test.py
+
+# All Data
+Dataset
+
+# Cleaned Data
+src/data/out
+src/data/train
+src/data/test
+src/data/valid
+
