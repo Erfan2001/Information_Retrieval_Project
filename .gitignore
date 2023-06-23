@@ -4,7 +4,8 @@ Unused
 test.py
 
 # All Data
-Dataset
+Dataset/train
+Dataset/test
 
 # Cleaned Data
 src/data/out
