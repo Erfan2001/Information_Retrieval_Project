@@ -6,28 +6,21 @@ from torch.utils.data import Dataset, DataLoader
 
 # Define a custom dataset class
 class MyDataset(Dataset):
-    def __init__(self, root_dir):
-        self.samples = []
-        for filename in os.listdir(root_dir):
-            if filename.endswith(".json"):
-                filepath = os.path.join(root_dir, filename)
-                with open(filepath, "r") as f:
+    def __init__(self, data_dir, tokenizer):
+        self.examples = []
+        for file_path in os.listdir(data_dir):
+            if file_path.endswith(".json"):
+                with open(os.path.join(data_dir, file_path), "r", encoding="utf8") as f:
                     data = json.load(f)
                     text = data["text"]
                     label = data["label"]
-                    self.samples.append((text, label))
+                    encoded = tokenizer(
+                        text, padding="max_length", truncation=True, max_length=512
+                    )
+                    self.examples.append((encoded, label))
 
     def __len__(self):
-        return len(self.samples)
+        return len(self.examples)
 
-    def __getitem__(self, index):
-        text, label = self.samples[index]
-        # Convert text to a tensor using your preferred text encoding method
-        # For example, you can use a tokenizer from the `transformers` library
-        input_ids = ...
-        attention_mask = ...
-        token_type_ids = ...
-        text_tensor = torch.tensor([input_ids, attention_mask, token_type_ids])
-        # Convert label to a tensor
-        label_tensor = torch.tensor(label)
-        return text_tensor, label_tensor
+    def __getitem__(self, idx):
+        return self.examples[idx]

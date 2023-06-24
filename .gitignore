@@ -2,7 +2,7 @@
 Unused
 *.pyc
 test.py
-
+*.zip
 # All Data
 Dataset/train
 Dataset/test
