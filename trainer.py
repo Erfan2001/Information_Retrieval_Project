@@ -24,9 +24,9 @@ def trainer():
     dataset = prepare_dataset(config)
 
     # Model
-    model = get_model(config)
-    model.train()
-    model.save_model_results()
+    # model = get_model(config)
+    # model.train()
+    # model.save_model_results()
 
 
 if __name__ == "__main__":

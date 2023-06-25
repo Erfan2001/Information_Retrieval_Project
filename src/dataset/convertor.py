@@ -6,29 +6,19 @@ import json
 from src.tools.logger import *
 
 
-def directories_json(
-    input_path: r"F:\University\Term8\Information Retrieval\Project\Dataset",
-    output_path: r"F:\University\Term8\Information Retrieval\Project\src\data",
-):
+def directories_json(input_path, output_path):
     allSubjects = []
     if not os.path.exists(output_path):
         os.makedirs(output_path)
-    # if not os.path.exists(os.path.join(output_path, "train")):
-    #     os.makedirs(os.path.join(output_path, "train"))
-    # if not os.path.exists(os.path.join(output_path, "test")):
-    #     os.makedirs(os.path.join(output_path, "test"))
 
     for subject in os.listdir(input_path):
         allSubjects.append(subject)
 
-    globalCounter = 0
     document_counter = 0
     for index, subject in enumerate(allSubjects):
         logger.info("[INFO] Start saving %s document" % subject)
-        # train_director = os.path.join(output_path, "train")
-        train_director = output_path
-        if not os.path.exists(train_director):
-            os.makedirs(train_director)
+        if not os.path.exists(os.path.join(output_path, subject)):
+            os.makedirs(os.path.join(output_path, subject))
         document_counter = 0
 
         for document in os.listdir(os.path.join(input_path, subject)):
@@ -50,12 +40,13 @@ def directories_json(
 
             try:
                 with open(
-                    os.path.join(train_director, "%d.json" % globalCounter),
+                    os.path.join(
+                        os.path.join(output_path, subject), "%d.json" % document_counter
+                    ),
                     "w",
                     encoding="utf-8",
                 ) as f:
                     f.write(json.dumps(json_file, ensure_ascii=False, indent=4))
-                    globalCounter += 1
                     document_counter += 1
             except:
                 logger.error(
