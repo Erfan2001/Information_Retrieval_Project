@@ -14,7 +14,7 @@ Our Hugging Face Models:
 
   2) bert-base-multilingual-cased + 3parts dataset (train:0.75 | test: 0.1 | valid: 0.15): https://huggingface.co/Erfan2001/zzz
 
-  3) bert-base-multilingual-cased + 3parts dataset (train:0.8 | valid: 0.2): https://huggingface.co/Erfan2001/final
+  3) bert-base-multilingual-cased + 2parts dataset (train:0.8 | valid: 0.2): https://huggingface.co/Erfan2001/final
 
 
 Spring 2023
