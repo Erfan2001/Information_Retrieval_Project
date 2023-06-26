@@ -20,7 +20,7 @@ def pars_args():
 
     # Important settings
     parser.add_argument(
-        "--model", type=str, default="Transformer", help="model structure"
+        "--model", type=str, default="Transformer", help="model structure[bert | multilingual | pytorch_bert | pytorch_multilingual]"
     )
     parser.add_argument(
         "--restore_model",
@@ -66,7 +66,7 @@ def pars_args():
     # Training
     parser.add_argument("--lr", type=float, default=0.0005, help="learning rate")
     parser.add_argument(
-        "--lr_descent", action="store_true", default=False, help="learning rate descent"
+        "--drop_out", default=0.3, help="drop out"
     )
     parser.add_argument(
         "--grad_clip", action="store_true", default=False, help="for gradient clipping"

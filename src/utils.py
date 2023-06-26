@@ -1,8 +1,9 @@
-from src.tools.config import pars_args
-
 # import timespan
 from datetime import datetime
 import numpy as np
+from huggingface_hub import login
+#-----------
+from src.tools.config import pars_args
 
 
 def compute_metrics(eval_pred):
@@ -31,3 +32,6 @@ def load_config_file():
 
 def preprocess_function(examples):
     return tokenizer(examples["text"], truncation=True)
+
+def access_HF(token:str):
+    login(token = token)

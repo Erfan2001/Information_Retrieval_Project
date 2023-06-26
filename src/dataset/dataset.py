@@ -2,7 +2,7 @@ import os
 import shutil
 from sklearn.model_selection import train_test_split
 import uuid
-
+from datasets import load_dataset
 # --------
 from src.dataset.convertor import directories_json
 from src.tools.logger import *
@@ -109,3 +109,23 @@ def prepare_dataset(configs):
     # Split data to 3 parts
     dataset.split_train_dev_test()
     return
+
+def load_dataset_HF(input_path):
+    loaded_dataset= load_dataset(input_path)
+    return loaded_dataset
+
+def label2id(input_path):
+    dic={}
+    count=0
+    for subject in os.walk(input_path):
+        dic[subject]=count
+        count+=1
+    return dic
+
+def id2label(input_path):
+    dic={}
+    count=0
+    for subject in os.walk(input_path):
+        dic[count]=subject
+        count+=1
+    return dic
