@@ -7,11 +7,11 @@ import uuid
 from src.dataset.convertor import directories_json
 from src.tools.logger import *
 from src.tools.logger import *
-
+from src.dataset.preprocessing import normalizer,tokenizer
 
 class Dataset:
-    def __init__(self, configs):
-        self.train_set = os.path.join(configs.data_dir, "train")
+    def __init__(self, configs,tokenized_dataset_path):
+        self.train_set = tokenized_dataset
         self.processed_data = configs.cache_dir
         self.test_set = os.path.join(configs.data_dir, "test")
 
@@ -38,8 +38,8 @@ class Dataset:
         """
 
         :param train_per: percentage of how many of samples should be in train set
-        :param valid: percentage of how many of samples should be in valid set
-        :param test: percentage of how many of samples should be in test set
+        :param valid_per: percentage of how many of samples should be in valid set
+        :param test_per: percentage of how many of samples should be in test set
         :return:
         """
         if not (
@@ -100,6 +100,12 @@ class Dataset:
 
 
 def prepare_dataset(configs):
-    dataset = Dataset(configs).load_dataset_from_file()
+    # Normalizer
+    normalizer(os.path.join(configs.data_dir, "train"),os.path.join(configs.cache_dir,'normalized_dataset'))
+    # Tokenizer
+    tokenizer(os.path.join(configs.cache_dir,'normalized_dataset'),os.path.join(configs.cache_dir,'tokenized_dataset'))
+    # Convert to json
+    dataset = Dataset(configs,os.path.join(configs.cache_dir,'tokenized_dataset')).load_dataset_from_file()
+    # Split data to 3 parts
     dataset.split_train_dev_test()
     return

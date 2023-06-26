@@ -19,14 +19,15 @@ def trainer():
     random.seed(config.seed)
     np.random.seed(config.seed)
     torch.manual_seed(config.seed)
+    
 
     # Prepare Dataset
     dataset = prepare_dataset(config)
 
     # Model
-    # model = get_model(config)
-    # model.train()
-    # model.save_model_results()
+    model = get_model(config)
+    model.train()
+    model.save_model_results()
 
 
 if __name__ == "__main__":
