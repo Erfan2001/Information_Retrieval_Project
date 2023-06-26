@@ -12,4 +12,5 @@ src/data/out
 src/data/train
 src/data/test
 src/data/valid
-
+NormalizeDataset
+TokenizeDataset
