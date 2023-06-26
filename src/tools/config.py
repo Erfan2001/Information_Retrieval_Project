@@ -51,7 +51,7 @@ def pars_args():
         "--vocab_size",
         type=int,
         default=50000,
-        help="Size of vocabulary. [default: 50000]",
+        help="Size of vocabulary. [default: 650]",
     )
     parser.add_argument(
         "--n_epochs", type=int, default=20, help="Number of epochs [default: 20]"
@@ -68,18 +68,15 @@ def pars_args():
     parser.add_argument(
         "--drop_out", default=0.3, help="drop out"
     )
-    parser.add_argument(
-        "--grad_clip", action="store_true", default=False, help="for gradient clipping"
-    )
-    parser.add_argument(
-        "--max_grad_norm",
-        type=float,
-        default=1.0,
-        help="for gradient clipping max gradient normalization",
-    )
 
     # classes Length
     parser.add_argument("-m", type=int, default=7, help="Number of classes")
+
+    # Token (HuggingFace)
+    parser.add_argument("-token", type=str, help="Hugging Face Token")
+    parser.add_argument(
+        "--modelURL", type=str, default=1, help="For testing model by using url of model which was published in HF"
+    )
 
     args = parser.parse_args()
 

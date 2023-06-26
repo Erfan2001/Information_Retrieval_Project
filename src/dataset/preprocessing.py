@@ -1,8 +1,10 @@
 from hazm import *
 import os
 
-
 def normalizer(input_path,output_path):
+    """
+        Normalize dataset by using Hazm Library
+    """
     normalizer = Normalizer()
 
     for subDir in os.listdir(input_path):
@@ -29,6 +31,9 @@ def normalizer(input_path,output_path):
 
 
 def tokenizer(input_path,output_path):
+    """
+        Tokenize dataset by using Hazm Library
+    """
     for subDir in os.listdir(input_path):
         #create root
         if not os.path.exists(output_path):

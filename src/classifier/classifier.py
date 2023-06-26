@@ -26,6 +26,14 @@ class MyClassifier:
         self.hps = configs
 
     def train(self):
+        """
+            Train model by recognizing a specific model
+            We have four different models:
+            1) HF_Transformers => distilbert-base-uncased
+            2) HF_Transformers => bert-base-multilingual-cased
+            3) Pure Pytorch => distilbert-base-uncased + Other Layers
+            4) Pure Pytorch => bert-base-multilingual-cased + Other Layers
+        """
         # id2label = {0: "Beinolmelal", 1: "Eghtesadi", 2: "Ejtemaee", 3: "ElmiVaDaneshghai", 4: "FarhangHonarVaResane", 5: "Siasi", 6: "Varzeshi"}
         # label2id = {"Beinolmelal": 0, "Eghtesadi": 1, "Ejtemaee":2, "ElmiVaDaneshghai":3, "FarhangHonarVaResane":4, "Siasi":5, "Varzeshi":6}
         match self.hps.model:
@@ -184,17 +192,41 @@ class MyClassifier:
 
                 torch.save(model.state_dict(), self.hps.save_root)
 
-    def inference(
-        self, text_list: List[str], get_prob: bool = True
-    ) -> List[Dict[str, Any]]:
-        ...
+    def inference(self,API_URL,token, input_path, norm_output_path, token_output_path):
+        """
+            Test our model:
+            In this case, after publishing our model to HuggingFace, we evaluate our model by using api.
+        """
+        # Preprocess
+        normalizer(input_path, norm_output_path)
+        tokenizer(norm_output_path, token_output_path)
+        # Test model
+        headers = {"Authorization": f"Bearer {token}"}
+        id2label = {0: "Beinolmelal", 1: "Eghtesadi", 2: "Ejtemaee", 3: "ElmiVaDaneshghai", 4: "FarhangHonarVaResane", 5: "Siasi", 6: "Varzeshi"}
+        # Access to HF model
+        def query(payload):
+            response = requests.post(API_URL, headers=headers, json=payload)
+            return response.json()
+        # Calculating scores for all documents
+        for root, dirs, files in os.walk(token_output_path):
+            for file in files:
+                with open(f'{token_output_path}/{file}') as f:
+                    text = json.load(f)
+                    text = text['text'][:600:]
+                    output = query({
+                    "inputs": f'{text}',
+                    })
+                    max = output[0][0]['score']
+                    maxLabel = output[0][0]['label']
+                    for label in output[0]:
+                        if label['score'] > max:
+                            max = label['score']
+                            maxLabel = label['label']
+                    print(f"FileName: ${file} => Label: {maxLabel}")
 
 
 def get_model(config):
     model_cfg = config.model
-    MyClassifier(config)
+    model = MyClassifier(config)
     return model
 
-
-def load_model(path):
-    ...

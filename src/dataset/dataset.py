@@ -100,6 +100,9 @@ class Dataset:
 
 
 def prepare_dataset(configs):
+    """
+        Prepare dataset before training (All preprocessed sections)
+    """
     # Normalizer
     normalizer(os.path.join(configs.data_dir, "train"),os.path.join(configs.cache_dir,'normalized_dataset'))
     # Tokenizer
@@ -111,10 +114,16 @@ def prepare_dataset(configs):
     return
 
 def load_dataset_HF(input_path):
+    """
+        Change dataset to the HF format
+    """
     loaded_dataset= load_dataset(input_path)
     return loaded_dataset
 
 def label2id(input_path):
+    """
+        Make dictionary consists of key which is labels and value which is ids
+    """
     dic={}
     count=0
     for subject in os.walk(input_path):
@@ -123,6 +132,9 @@ def label2id(input_path):
     return dic
 
 def id2label(input_path):
+    """
+        Make dictionary consists of key which is id and value which is label
+    """
     dic={}
     count=0
     for subject in os.walk(input_path):

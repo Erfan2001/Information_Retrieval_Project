@@ -31,6 +31,10 @@ def load_config_file():
 
 
 def preprocess_function(examples):
+    """
+        Preprocess function for pretrained tokenizers
+        * truncation :The act of making something shorter or quicker, especially by removing the end of it:
+    """
     return tokenizer(examples["text"], truncation=True)
 
 def access_HF(token:str):

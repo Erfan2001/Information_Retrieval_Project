@@ -7,6 +7,12 @@ from src.tools.logger import *
 
 
 def directories_json(input_path, output_path):
+    """
+        Change all subject folders,containing lots of documents to json formt
+        Each json has two key/value:
+            1) test: preprocessed text
+            2) label: integer label due to label2id function
+    """
     allSubjects = []
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -33,8 +39,6 @@ def directories_json(input_path, output_path):
                     "[Error] When opening %s document in %s category"
                     % (document, subject)
                 )
-
-            # todo ! Add processed text to our cleaned dataset
 
             json_file = {"text": text, "label": index}
 
