@@ -3,6 +3,8 @@ import shutil
 from sklearn.model_selection import train_test_split
 import uuid
 from datasets import load_dataset
+from cleantext import clean
+
 # --------
 from src.dataset.convertor import directories_json
 from src.tools.logger import *
@@ -98,6 +100,68 @@ class Dataset:
         shutil.rmtree(os.path.join(self.processed_data, "out"))
         return self
 
+
+def remove_phrases(text):
+    # Define the phrases 
+    phrases_to_remove = ['به گزارش', 'به نقل از', 'به عنوان مثال', 'به طور کلی']
+    # Create a regular expression pattern from the phrases to remove
+    pattern = '|'.join(phrases_to_remove)
+    # Use the re.sub() function to replace the pattern with an empty string
+    text = re.sub(pattern, '', text)
+    return text
+    
+def purifying_text(text):
+    text = text.strip()
+
+    text = clean(text,
+        no_digits=False,
+        fix_unicode=True,
+        lower=True,
+        to_ascii=False,
+        no_line_breaks=True,
+        no_emails=True,
+        no_urls=True,
+        no_numbers=False,
+        no_phone_numbers=True,
+        no_currency_symbols=True,
+        replace_with_number="",
+        replace_with_url="",
+        no_punct=False,
+        replace_with_digit="0",
+        replace_with_email="",
+    )
+
+    html_Cleaner = re.compile('<.*?>')
+    text = re.sub(html_Cleaner, '', text)
+
+    # removing some specific patterns (In Persian mostly)
+    weird_pattern = re.compile("["
+        u"\u2640-\u2642"
+        u"\u2600-\u2B55"
+        u"\U0001F600-\U0001F64F" 
+        u"\U0001F300-\U0001F5FF"  
+        u"\U0001F680-\U0001F6FF"  
+        u"\U0001F1E0-\U0001F1FF"  
+        u'\U00010000-\U0010ffff'
+        u"\u200d"
+        u"\u23cf"
+        u"\U00002702-\U000027B0"
+        u"\U000024C2-\U0001F251"
+        u"\U0001f926-\U0001f937"
+        u"\u23e9"
+        u"\u231a"
+        u"\u3030"
+        u"\ufe0f"
+        u"\u2069"
+        u"\u2066"
+        u"\u2068"
+        u"\u2067"
+        "]+", flags=re.UNICODE)
+    text = weird_pattern.sub(r'', text)
+    # Remove spaces
+    text = re.sub("#", "", text)
+    text = re.sub("\s+", " ", text)
+    return text
 
 def prepare_dataset(configs):
     """

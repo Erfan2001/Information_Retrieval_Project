@@ -4,7 +4,7 @@ import os
 import shutil
 import json
 from src.tools.logger import *
-
+from src.dataset.dataset import purifying_text,remove_phrases
 
 def directories_json(input_path, output_path):
     """
@@ -39,7 +39,8 @@ def directories_json(input_path, output_path):
                     "[Error] When opening %s document in %s category"
                     % (document, subject)
                 )
-
+            text=remove_phrases(text)
+            text = purifying_text(cleaning)
             json_file = {"text": text, "label": index}
 
             try:
