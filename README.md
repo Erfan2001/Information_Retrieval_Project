@@ -22,7 +22,7 @@ Our Hugging Face Models:
 
   1) distilbert-base-uncased: [https://huggingface.co/Erfan2001/distilbert_NoTokenized](https://huggingface.co/Erfan2001/distilbert_NoTokenized)
     
-  2) distilbert-base-uncased(The best version): [https://huggingface.co/Erfan2001/distilbert_NoTokenized](https://huggingface.co/Erfan2001/Final_PersianTextClassificationModel)](https://huggingface.co/Erfan2001/distilbert_NoTokenized](https://huggingface.co/Erfan2001/Final_PersianTextClassificationModel)
+  2) distilbert-base-uncased(The best version): [https://huggingface.co/Erfan2001/Final_PersianTextClassificationModel](https://huggingface.co/Erfan2001/Final_PersianTextClassificationModel)
 
   3) bert-base-multilingual-cased: [https://huggingface.co/Erfan2001/multilingual_NoTokenized](https://huggingface.co/Erfan2001/multilingual_NoTokenized)
 
