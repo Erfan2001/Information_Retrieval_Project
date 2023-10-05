@@ -1,6 +1,4 @@
-### In The Name Of God
-***
-Information Retrieval Project 
+# Information Retrieval Project 
 
 Team Members 😎:
 * Seyed Erfan Nourbakhsh 983613059
